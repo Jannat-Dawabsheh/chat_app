@@ -1,7 +1,9 @@
 
 import 'package:chat_app/core/utils/constants/app_colors.dart';
 import 'package:chat_app/core/utils/route/app_routes.dart';
+import 'package:chat_app/features/auth/manager/auth_cubit/auth_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -35,18 +37,17 @@ class _LoginPageState extends State<LoginPage> {
   }
 
 
-void login() async {
+  void login(VoidCallback loginFunc) {
+    debugPrint("Email: $_email, Password:$_password");
     if (_formKey.currentState!.validate()) {
+      loginFunc();
 
-      debugPrint(" $_email   $_password");
-      
-      
     }
-
-}
+  }
 
   @override
   Widget build(BuildContext context) {
+    final cubit=BlocProvider.of<AuthCubit>(context);
     return Scaffold(
           appBar: AppBar(
         ),
@@ -139,7 +140,7 @@ void login() async {
                         textInputAction: TextInputAction.done,
                         onEditingComplete: () {
                           _passwordFocusNode.unfocus();
-                          login();
+                          login(()=>cubit.login(_emailControler.text, _passwordControler.text));
                         },
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -216,24 +217,52 @@ void login() async {
                       SizedBox(
                         width: double.infinity,
                         height: 50,
-                        child: ElevatedButton(
-                                onPressed: (){
-                                  login();
-                                },
+                        child: BlocConsumer<AuthCubit, AuthState>(
+                          bloc:cubit,
+                          listenWhen: (previous,current)=>current is AuthSuccess || current is AuthError,
+                          listener: (context, state) {
+                            if(state is AuthSuccess){
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Login Success'),
+                                ),
+                              );
+                              Navigator.of(context).pushNamed(AppRoutes.home);
+                            }else if(state is AuthError){
+                               ScaffoldMessenger.of(context).showSnackBar(
+                                 SnackBar(
+                                  content: Text(state.message),
+                                ),
+                              );
+                            }
+                          },
+                          buildWhen: (previous,current)=>current is AuthLoading || current is AuthError,
+                          builder: (context, state) {
+                            if(state is AuthLoading){
+                              return ElevatedButton(
+                                onPressed: null,
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: AppColors.primary,
                                   foregroundColor: AppColors.white,
                                 ),
-                                child: Text(
-                                  "login",
+                                child: const Center (child: CircularProgressIndicator.adaptive()),
+                              );
+                            }
+                            return ElevatedButton(
+                                onPressed: ()=>login(()=>cubit.login(_emailControler.text, _passwordControler.text)),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.primary,
+                                  foregroundColor: AppColors.white,
+                                ),
+                                child: Text("login",
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleMedium!
                                         .copyWith(
                                             color: AppColors.white,
-                                            fontWeight: FontWeight.w600
-                                        )
-                                ),
+                                            fontWeight: FontWeight.w600)),
+                              );
+                          },
                         ),
                       ),
                       

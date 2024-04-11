@@ -43,8 +43,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     if (_formKey.currentState!.validate()) {
 
       debugPrint("$_name  $_email   $_password");
-      
-      
+
       }
     }
   
