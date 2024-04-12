@@ -7,6 +7,11 @@ final class ChatInitial extends ChatState {}
 final class ChatLoading extends ChatState {}
 final class ChatLoaded extends ChatState {}
 final class ChatMessageSent extends ChatState {}
+final class ChatMessaging extends ChatState {}
+final class ChatMessageError extends ChatState {
+   final String message;
+  ChatMessageError(this.message);
+}
 final class ChatSuccess extends ChatState {
   final List<ChatMessage>message;
   ChatSuccess(this.message);

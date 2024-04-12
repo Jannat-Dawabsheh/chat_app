@@ -1,5 +1,6 @@
 class ApiPath{
-  static String user(String id) => 'users/$id';
+  static String allUser() => 'user/';
+  static String user(String id) => 'user/$id';
   static String sendMessage(String id) => 'message/$id';
   static String message() => 'message/';
 }

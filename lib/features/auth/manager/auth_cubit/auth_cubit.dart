@@ -44,6 +44,7 @@ class AuthCubit extends Cubit<AuthState> {
      try{
       await _authServices.logout();
       print('logout success');
+      emit(AuthLoggedOut());
      } on FirebaseAuthException catch(e){
         emit(AuthError(e.message!));
      }

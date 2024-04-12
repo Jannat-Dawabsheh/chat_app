@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
                 useMaterial3: true,
               ),
               onGenerateRoute: AppRouter.onGenerateRoute,
-              initialRoute: state is AuthSuccess ? AppRoutes.home : AppRoutes.login,
+              initialRoute:  state is AuthSuccess ? AppRoutes.home : AppRoutes.login,
             );
           },
         );

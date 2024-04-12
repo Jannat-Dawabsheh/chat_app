@@ -29,3 +29,8 @@ class UserData {
     );
   }
 }
+
+List<UserData> users=[
+  UserData(id: '1', email: 'email', username: 'username', password: 'password', photoUrl: 'https://static.vecteezy.com/system/resources/previews/014/194/216/original/avatar-icon-human-a-person-s-badge-social-media-profile-symbol-the-symbol-of-a-person-vector.jpg'),
+  UserData(id: '2', email: 'email', username: 'name', password: 'password', photoUrl: 'https://static.vecteezy.com/system/resources/previews/014/194/216/original/avatar-icon-human-a-person-s-badge-social-media-profile-symbol-the-symbol-of-a-person-vector.jpg'),
+];

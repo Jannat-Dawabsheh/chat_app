@@ -15,4 +15,12 @@ class UserServices {
     );
     return userData;
   }
+
+  Future<List<UserData>> getAllUsers() async {
+    final userData = await _firestoreService.getCollection(
+      path: ApiPath.allUser(),
+      builder: (data, documentId) => UserData.fromMap(data),
+    );
+    return userData;
+  }
 }
