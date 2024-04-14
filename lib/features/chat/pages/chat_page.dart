@@ -19,7 +19,8 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     final cubit = BlocProvider.of<ChatCubit>(context);
     final authCubit = BlocProvider.of<AuthCubit>(context);
-
+    final reciverId=ModalRoute.of(context)!.settings.arguments as String;
+  
     return Scaffold(
       appBar: AppBar(
         title: const Text('Chat'),
@@ -50,18 +51,42 @@ class _ChatPageState extends State<ChatPage> {
                       current is ChatSuccess || current is ChatError,
                   builder: (context, state) {
                     if (state is ChatSuccess) {
-                      if (state.message.isEmpty) {
+                      final currentUserId=state.currentUserId;
+                      final privateMessages=state.message.where((element) => (element.receiverId==reciverId&&element.senderId==currentUserId)||(element.receiverId==currentUserId&&element.senderId==reciverId)).toList();
+                      if (privateMessages.isEmpty) {
                         return const Center(
                           child: Text('No messages'),
                         );
                       }
                       return ListView.builder(
-                        itemCount: state.message.length,
+                        itemCount: privateMessages.length,
                         itemBuilder: (context, index) {
-                          final message = state.message[index];
-                          
-                          return ListTile(
-                            
+                          //final message = state.message[index];
+                         
+                          final message = privateMessages[index];
+                          return currentUserId==message.senderId
+                          ?Directionality(
+                            textDirection: TextDirection.rtl,
+                            child: ListTile(
+                              leading: CircleAvatar(
+                                backgroundImage: NetworkImage(
+                                  message.senderPhoto,
+                                ),
+                                radius: 40,
+                              ),
+                              title: Text(message.message),
+                              subtitle: Text(
+                                'You',
+                                style: Theme.of(context)
+                                .textTheme
+                                .labelMedium!
+                                .copyWith(
+                                  color: AppColors.grey,
+                                ),
+                                ),
+                            ),
+                          )
+                          :ListTile(
                             leading: CircleAvatar(
                               backgroundImage: NetworkImage(
                                 message.senderPhoto,
@@ -69,7 +94,15 @@ class _ChatPageState extends State<ChatPage> {
                               radius: 40,
                             ),
                             title: Text(message.message),
-                            subtitle: Text(message.senderName),
+                            subtitle: Text(
+                              message.senderName,
+                               style: Theme.of(context)
+                              .textTheme
+                              .labelMedium!
+                              .copyWith(
+                                color: AppColors.primary,
+                              ),
+                              ),
                           );
                         },
                       );
@@ -109,7 +142,7 @@ class _ChatPageState extends State<ChatPage> {
                       return IconButton(
                         icon: const Icon(Icons.send),
                         onPressed: () async {
-                          await cubit.sendMessage(_messageController.text);
+                          await cubit.sendMessage(_messageController.text,reciverId);
                         },
                       );
                     },

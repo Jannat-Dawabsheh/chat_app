@@ -1,3 +1,4 @@
+import 'package:chat_app/core/utils/constants/app_colors.dart';
 import 'package:chat_app/core/utils/route/app_router.dart';
 import 'package:chat_app/core/utils/route/app_routes.dart';
 import 'package:chat_app/features/auth/manager/auth_cubit/auth_cubit.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               title: 'Chat App',
               theme: ThemeData(
-                colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+                colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
                 useMaterial3: true,
               ),
               onGenerateRoute: AppRouter.onGenerateRoute,

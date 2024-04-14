@@ -14,7 +14,8 @@ final class ChatMessageError extends ChatState {
 }
 final class ChatSuccess extends ChatState {
   final List<ChatMessage>message;
-  ChatSuccess(this.message);
+  final String currentUserId;
+  ChatSuccess(this.message, this.currentUserId);
 }
 final class ChatError extends ChatState {
   final String message;

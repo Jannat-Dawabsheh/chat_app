@@ -34,13 +34,22 @@ class AppRouter {
             return cubit;
             },
          
-            child: HomePage(),
+            child:const HomePage(),
           ),
           settings: settings,
         );
+
         case AppRoutes.chatListPage:
         return MaterialPageRoute(
-          builder: (_) =>ChatListPage(),
+          builder: (_) => BlocProvider(
+           create: (BuildContext context) {  
+              final cubit = HomeCubitCubit(); 
+              cubit.getHomeData();
+            return cubit;
+            },
+         
+            child:const ChatListPage(),
+          ),
           settings: settings,
         );
         
