@@ -27,9 +27,9 @@ class _ChatPageState extends State<ChatPage> {
         actions: [
           IconButton(
             icon: const Icon(Icons.close),
-            onPressed: () async {
-              await authCubit.logout();
-            },
+            onPressed: () {
+              Navigator.of(context, rootNavigator: true).pushReplacementNamed(AppRoutes.privateConversation); 
+             },
           ),
         ],
       ),
@@ -143,6 +143,7 @@ class _ChatPageState extends State<ChatPage> {
                         icon: const Icon(Icons.send),
                         onPressed: () async {
                           await cubit.sendMessage(_messageController.text,reciverId);
+                          await cubit.addConversation(reciverId);
                         },
                       );
                     },

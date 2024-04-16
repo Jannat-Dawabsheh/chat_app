@@ -1,7 +1,7 @@
 import 'package:chat_app/core/models/user_data.dart';
 import 'package:chat_app/core/utils/constants/app_colors.dart';
 import 'package:chat_app/core/utils/route/app_routes.dart';
-import 'package:chat_app/features/chat/manager/cubit/home_cubit/home_cubit_cubit.dart';
+import 'package:chat_app/features/chat/manager/home_cubit/home_cubit_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,7 +18,7 @@ class _ChatListPageState extends State<ChatListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('vailable useres'),
+        title: const Text('Available useres'),
         centerTitle: true,
       ),
       body:BlocBuilder<HomeCubitCubit,HomeCubitState>(

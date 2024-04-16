@@ -227,7 +227,7 @@ class _LoginPageState extends State<LoginPage> {
                                   content: Text('Login Success'),
                                 ),
                               );
-                              Navigator.of(context).pushNamed(AppRoutes.home);
+                              Navigator.of(context, rootNavigator: true).pushNamed(AppRoutes.privateConversation);
                             }else if(state is AuthError){
                                ScaffoldMessenger.of(context).showSnackBar(
                                  SnackBar(
