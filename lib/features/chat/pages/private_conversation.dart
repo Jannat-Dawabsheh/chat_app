@@ -16,6 +16,7 @@ class PrivateConversation extends StatefulWidget {
 
 class _PrivateConversationState extends State<PrivateConversation> {
 
+
   @override
   void initState() {
     // TODO: implement initState
@@ -27,7 +28,7 @@ class _PrivateConversationState extends State<PrivateConversation> {
     final authCubit = BlocProvider.of<AuthCubit>(context);
     final userServices = UserServices();
      final user=UserServices();
-     List<UserData> usersList=[];
+      List<UserData> usersList=[];
     return Scaffold(
       appBar: AppBar(
         title: const Text('Conversations'),
@@ -61,7 +62,7 @@ class _PrivateConversationState extends State<PrivateConversation> {
             },
 
       child:BlocBuilder<ConversationCubit,ConversationState>(
-      bloc: BlocProvider.of<ConversationCubit>(context),
+      bloc: cubit,
       buildWhen: (previous, current) => current is ConversationLoading|| current is ConversationError ||current is ConversationLoaded,
       builder: (context, state) {
         if(state is ConversationLoading){
@@ -74,8 +75,16 @@ class _PrivateConversationState extends State<PrivateConversation> {
           );
         }else if(state is ConversationLoaded){
           print('in loaded');
-          print(state.users.length);
-          print(usersList.length);
+          print("users"+"${state.users.length}");
+          print("rec"+"${state.recMsg.length}");
+          print("sen"+"${state.senderMsg.length}");
+          state.senderMsg.forEach((element) async { 
+        final user=await userServices.getUserWithID(element.receiverId);
+        usersList.add(user);
+          //print('added');
+        });
+        print("list"+"${usersList.length}");
+       
         return SafeArea(
         
            child: SingleChildScrollView(
@@ -118,7 +127,8 @@ class _PrivateConversationState extends State<PrivateConversation> {
                );
         
         return const SizedBox.shrink();
-      }else {
+      }      
+      else {
           return const SizedBox.shrink();
         }
       

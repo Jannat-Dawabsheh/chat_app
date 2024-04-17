@@ -8,7 +8,7 @@ class ConversationServices{
 
   Future<void> AddConversation(ConversationModel conv)async=>
    firestoreServices.setData(
-    path: ApiPath.addConversation(conv.id), 
+    path: ApiPath.addConversations(conv.id), 
     data: conv.toMap(),
     );
 

@@ -12,8 +12,11 @@ final class ConversationLoading extends ConversationState{}
 final class ConversationLoaded extends ConversationState{
 
  final List<UserData>users;
- 
+ final recMsg;
+ final senderMsg;
  const ConversationLoaded({
+  required this.recMsg,
+  required this.senderMsg,
   required this.users,
  });
 }

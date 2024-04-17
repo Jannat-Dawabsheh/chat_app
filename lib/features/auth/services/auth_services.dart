@@ -9,6 +9,7 @@ abstract class AuthServices{
   Future<void>logout();
   Future<bool>isLoggedIn();
   Future<User?>getUser();
+
 }
 
 class AuthServicesImpl implements AuthServices{

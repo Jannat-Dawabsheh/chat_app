@@ -24,16 +24,24 @@ class ConversationCubit extends Cubit<ConversationState> {
 
       conStream.listen((conv) { 
        final senderMsg=conv.where((element) => (element.senderId==currentUser.id)).toList();    
-      senderMsg.forEach((element) async { final user=await userServices.getUserWithID(element.receiverId); l.add(1);usersList.add(user); print(user.username);});
+       addf(senderMsg);
       final recMsg=conv.where((element) => (element.receiverId==currentUser.id)).toList();
       recMsg.forEach((element) async {usersList.add(await userServices.getUserWithID(element.senderId));}); 
-        emit(ConversationLoaded(users:usersList));
-        print('find user');
-        print(usersList.length);
-        print(senderMsg.length);
-        print(recMsg.length);
+        emit(ConversationLoaded(recMsg:recMsg,senderMsg:senderMsg, users:usersList));
+        
       });
+
      }
+
+     void addf(final senderMsg){
+      senderMsg.forEach((element) async { 
+        final user=await userServices.getUserWithID(element.receiverId);
+        usersList.add(user);
+      //print('added');
+     });
+     }
+    
+
     
   }
 
