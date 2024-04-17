@@ -86,28 +86,6 @@ Future<void>addConversation(String receiverId)async{
   }
 
 
-  // Future<void>getConversations()async{
-  //    List<UserData> usersList=[];  
-  //   try{
-  //     final currentUser=await userServices.getUser();
-  //     final conStream=conversationServices.getConversation();
-
-  //     conStream.listen((conv) { 
-  //      final senderMsg=conv.where((element) => (element.senderId==currentUser.id)).toList();    
-  //     senderMsg.forEach((element) async { usersList.add(await userServices.getUserWithID(element.receiverId));});
-  //     final recMsg=conv.where((element) => (element.receiverId==currentUser.id)).toList();
-  //     recMsg.forEach((element) async {usersList.add(await userServices.getUserWithID(element.senderId));}); 
-  //       emit(ConvSuccess(conv, currentUser.id,usersList));
-  //       print('find user');
-  //       print(usersList.length);
-  //     });
-  //    }
-  //   catch(e){
-  //     emit(ChatError(e.toString()));
-  //   }
-
-  // }
-
 
 
 }

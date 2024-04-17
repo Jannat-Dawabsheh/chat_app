@@ -197,10 +197,6 @@ class _LoginPageState extends State<LoginPage> {
                         alignment: Alignment.centerRight,
                         child: TextButton(
                           onPressed: () {},
-                          // => showModalBottomSheet(
-                          //   context: context,
-                          //   builder: (context) => const forgetPasswordModelSheet(),
-                          // ),
                           child: Text(
                             "forget password?",
                             style:

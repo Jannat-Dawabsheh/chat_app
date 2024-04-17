@@ -21,10 +21,3 @@ final class PrivateConvError extends privateConvState {
   });
 }
 
-final class privateConAdded extends privateConvState {
-  final UserData user;
-  privateConAdded({required this.user});
-}
-
-final class  privateConAdding extends privateConvState {}
-

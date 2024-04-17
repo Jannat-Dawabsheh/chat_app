@@ -26,7 +26,6 @@ class PrivateConvImpl implements PrivateConv {
 
   @override
   Future<void> addToConv(UserData user, UserData nextUser) async {
-    final currentUser = await authServices.getUser();
 
     await firestore.setData(
       path: ApiPath.addConversation(

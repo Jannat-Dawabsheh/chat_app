@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:chat_app/features/auth/services/auth_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
