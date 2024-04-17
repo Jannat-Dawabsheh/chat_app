@@ -1,9 +1,7 @@
-import 'package:chat_app/core/models/user_data.dart';
-import 'package:chat_app/core/services/user_services.dart';
 import 'package:chat_app/core/utils/constants/app_colors.dart';
 import 'package:chat_app/core/utils/route/app_routes.dart';
 import 'package:chat_app/features/auth/manager/auth_cubit/auth_cubit.dart';
-import 'package:chat_app/features/chat/manager/conversation/conversation_cubit.dart';
+import 'package:chat_app/features/chat/manager/privetConv_cubit/privetCon_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,11 +22,8 @@ class _PrivateConversationState extends State<PrivateConversation> {
   }
   @override
   Widget build(BuildContext context) {
-    final cubit = BlocProvider.of<ConversationCubit>(context);
+    final cubit = BlocProvider.of<PrivateConvCubit>(context);
     final authCubit = BlocProvider.of<AuthCubit>(context);
-    final userServices = UserServices();
-     final user=UserServices();
-      List<UserData> usersList=[];
     return Scaffold(
       appBar: AppBar(
         title: const Text('Conversations'),
@@ -61,30 +56,25 @@ class _PrivateConversationState extends State<PrivateConversation> {
               }
             },
 
-      child:BlocBuilder<ConversationCubit,ConversationState>(
+      child:BlocBuilder<PrivateConvCubit,privateConvState>(
       bloc: cubit,
-      buildWhen: (previous, current) => current is ConversationLoading|| current is ConversationError ||current is ConversationLoaded,
       builder: (context, state) {
-        if(state is ConversationLoading){
+        if(state is PrivateConvLoading){
           return const Center(
             child: CircularProgressIndicator.adaptive(),
           );
-        }else if(state is ConversationError){
+        }else if(state is PrivateConvError){
           return  Center(
             child: Text(state.message),
           );
-        }else if(state is ConversationLoaded){
+        }else if(state is PrivateConvLoaded){
           print('in loaded');
           print("users"+"${state.users.length}");
-          print("rec"+"${state.recMsg.length}");
-          print("sen"+"${state.senderMsg.length}");
-          state.senderMsg.forEach((element) async { 
-        final user=await userServices.getUserWithID(element.receiverId);
-        usersList.add(user);
-          //print('added');
-        });
-        print("list"+"${usersList.length}");
-       
+           if (state.users.isEmpty) {
+              return const Center(
+                child: Text('No conversation yet!'),
+              );
+            }
         return SafeArea(
         
            child: SingleChildScrollView(
@@ -126,7 +116,6 @@ class _PrivateConversationState extends State<PrivateConversation> {
            )
                );
         
-        return const SizedBox.shrink();
       }      
       else {
           return const SizedBox.shrink();

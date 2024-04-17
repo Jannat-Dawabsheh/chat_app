@@ -1,4 +1,3 @@
-import 'package:chat_app/core/models/user_data.dart';
 import 'package:chat_app/core/utils/constants/app_colors.dart';
 import 'package:chat_app/core/utils/route/app_routes.dart';
 import 'package:chat_app/features/chat/manager/home_cubit/home_cubit_cubit.dart';
@@ -18,6 +17,12 @@ class _ChatListPageState extends State<ChatListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading:IconButton(
+            icon: const Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              Navigator.of(context, rootNavigator: true).pushReplacementNamed(AppRoutes.privateConversation); 
+             },
+          ),
         title: const Text('Available useres'),
         centerTitle: true,
       ),

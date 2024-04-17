@@ -4,6 +4,7 @@ import 'package:chat_app/features/chat/models/chat_message.dart';
 import 'package:chat_app/features/chat/models/conversation_model.dart';
 import 'package:chat_app/features/chat/services/chat_services.dart';
 import 'package:chat_app/features/chat/services/conversations.dart';
+import 'package:chat_app/features/chat/services/privateConv.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -15,7 +16,7 @@ class ChatCubit extends Cubit<ChatState> {
  final chatServices = ChatServices();
  final userServices = UserServices();
  final conversationServices = ConversationServices();
-
+final convServices = PrivateConvImpl();
   Future<void>sendMessage(String text, String receiverId)async{
     emit(ChatMessaging());
     try{
@@ -64,6 +65,23 @@ Future<void>addConversation(String receiverId)async{
       await conversationServices.AddConversation(conversationModel);
     }catch(e){
       emit(ChatMessageError(e.toString()));
+    }
+  }
+
+   Future<void> addToConv(String userid) async {
+    emit(privateConAdding());
+    try {
+      final currentUser = await userServices.getUser();
+      final selectedUser = await UserServices().getUserWithID(userid);
+    final user = UserData(id: selectedUser.id, email: selectedUser.email, username: selectedUser.username, password: selectedUser.password, photoUrl: selectedUser.photoUrl);
+    await convServices.addToConv(user,currentUser);
+    emit(
+          privateConAdded(user: user),
+        );
+    } catch (e) {
+      emit(
+        PrivateConvError(message: e.toString()),
+      );
     }
   }
 

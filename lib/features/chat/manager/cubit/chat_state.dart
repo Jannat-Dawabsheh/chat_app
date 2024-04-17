@@ -34,3 +34,17 @@ final class ConvSuccess extends ChatState {
   ConvSuccess(this.conv, this.currentUserId,this.usersList);
 }
 
+final class PrivateConvError extends ChatState {
+  final String message;
+
+  PrivateConvError({
+    required this.message,
+  });
+}
+
+final class privateConAdded extends ChatState {
+  final UserData user;
+  privateConAdded({required this.user});
+}
+
+final class  privateConAdding extends ChatState {}

@@ -23,6 +23,7 @@ class _ChatPageState extends State<ChatPage> {
   
     return Scaffold(
       appBar: AppBar(
+        
         title: const Text('Chat'),
         actions: [
           IconButton(
@@ -143,7 +144,7 @@ class _ChatPageState extends State<ChatPage> {
                         icon: const Icon(Icons.send),
                         onPressed: () async {
                           await cubit.sendMessage(_messageController.text,reciverId);
-                          await cubit.addConversation(reciverId);
+                          await cubit.addToConv(reciverId);
                         },
                       );
                     },

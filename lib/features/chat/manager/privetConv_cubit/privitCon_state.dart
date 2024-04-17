@@ -1,11 +1,11 @@
 part of 'privetCon_cubit.dart';
 
-sealed class privitConState {}
-final class PrivateConvInitial extends privitConState {}
+sealed class privateConvState {}
+final class PrivateConvInitial extends privateConvState {}
 
-final class PrivateConvLoading extends privitConState {}
+final class PrivateConvLoading extends privateConvState {}
 
-final class PrivateConvLoaded extends privitConState {
+final class PrivateConvLoaded extends privateConvState {
   final List<UserData> users;
 
   PrivateConvLoaded({
@@ -13,7 +13,7 @@ final class PrivateConvLoaded extends privitConState {
   });
 }
 
-final class PrivateConvError extends privitConState {
+final class PrivateConvError extends privateConvState {
   final String message;
 
   PrivateConvError({
@@ -21,10 +21,10 @@ final class PrivateConvError extends privitConState {
   });
 }
 
-final class privateConAdded extends privitConState {
+final class privateConAdded extends privateConvState {
   final UserData user;
   privateConAdded({required this.user});
 }
 
-final class  privateConAdding extends privitConState {}
+final class  privateConAdding extends privateConvState {}
 

@@ -49,8 +49,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final cubit=BlocProvider.of<AuthCubit>(context);
     return Scaffold(
-          appBar: AppBar(
-        ),
+
           body: SafeArea(
             child: SingleChildScrollView(
               child: Padding(
@@ -60,6 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      const SizedBox(height: 30,),
                       Image.asset(
                         'assets/images/chat.png',
                         width: MediaQuery.sizeOf(context).width*0.4,
